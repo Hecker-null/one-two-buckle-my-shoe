@@ -21,13 +21,15 @@ for module_name, pip_name in packages.items():
 import time
 import mysql.connector as mysql
 
-root_password=input("Enter your mysql root password: ").strip()
+username=input("enter your mysql username: ").strip()
+password=input("Enter your mysql root password: ").strip()
+
 
 try:
     con=mysql.connect(
         host="localhost",
-        password=root_password,
-        user="root"
+        password=password,
+        user=username
     )
     
     cur=con.cursor()
@@ -64,8 +66,9 @@ try:
     cur.close()
     con.close()
     #save password given by the user
-    with open("config.txt","w") as f:
-        f.write(root_password)
+    with open("config.txt", "w") as f:
+        f.write(f"mysql_user={username}\n")
+        f.write(f"mysql_password={password}")
     
     print("Creating tables.....")
     time.sleep(2)

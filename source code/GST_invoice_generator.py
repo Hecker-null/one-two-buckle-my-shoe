@@ -11,10 +11,17 @@ from reportlab.platypus import Table,TableStyle
 #make the accsess to old invoices possible
 #also add a invoice id search
 #also add the ability to delete the invoices selected 
+config = {}
+
 with open("config.txt", "r") as f:
-    root_password = f.read().strip()
+    for line in f:
+        key, value = line.strip().split("=")
+        config[key] = value
+
+mysql_user = config["mysql_user"]
+mysql_password = config["mysql_password"]
 # MySQL connection
-con=mysql.connect(host="localhost",password=root_password,user="root",database="GST")
+con=mysql.connect(host="localhost",password=mysql_password,user=mysql_user,database="GST")
 cur=con.cursor()
 #GLOBAL VARIABLES
 
